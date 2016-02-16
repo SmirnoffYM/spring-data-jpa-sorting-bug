@@ -1,6 +1,7 @@
 package com.habds.spring.persistence.bo;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 
 @Entity
 public class Account {
@@ -9,8 +10,8 @@ public class Account {
     @GeneratedValue
     private Long id;
 
-    @OneToOne(cascade = CascadeType.PERSIST)
-    private AccountState state;
+    private BigDecimal amount;
+    private String currency;
 
     @ManyToOne
     private User user;
@@ -18,8 +19,9 @@ public class Account {
     protected Account() {
     }
 
-    public Account(AccountState state) {
-        setState(state);
+    public Account(BigDecimal amount, String currency) {
+        this.amount = amount;
+        this.currency = currency;
     }
 
     public Long getId() {
@@ -30,15 +32,20 @@ public class Account {
         this.id = id;
     }
 
-    public AccountState getState() {
-        return state;
+    public BigDecimal getAmount() {
+        return amount;
     }
 
-    public void setState(AccountState state) {
-        if (state != null) {
-            this.state = state;
-            state.setAccount(this);
-        }
+    public void setAmount(BigDecimal amount) {
+        this.amount = amount;
+    }
+
+    public String getCurrency() {
+        return currency;
+    }
+
+    public void setCurrency(String currency) {
+        this.currency = currency;
     }
 
     public User getUser() {
